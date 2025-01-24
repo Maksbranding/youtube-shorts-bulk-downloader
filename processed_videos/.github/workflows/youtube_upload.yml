@@ -1,0 +1,26 @@
+name: YouTube Video Uploader
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Runs daily at midnight UTC (adjust this if needed)
+
+jobs:
+  upload-videos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install google-api-python-client google-auth google-auth-oauthlib google-auth-httplib2
+
+      - name: Run upload script
+        env:
+          API_KEY: ${{ secrets.AIzaSyAcPcPnqXM1yJ3aCX-hk3ZW7g0Y2b7s8Yw }}
+        run: python3 youtube_upload.py
